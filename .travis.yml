@@ -4,11 +4,14 @@ distro: xenial
 mono: none
 dotnet: 3.0.101
 
+services:
+  - docker
+
 before_script:
   - chmod -R a+x scripts
 script:
-  - ./scripts/build.sh
-  - ./scripts/test.sh
+  - ./scripts/dotnet-build.sh
+  - ./scripts/dotnet-test.sh
 after_success:
   - ./scripts/docker-push.sh
 notifications:
