@@ -1,0 +1,17 @@
+language: csharp
+sudo: required
+distro: xenial
+mono: none
+dotnet: 3.0.101
+
+before_script:
+  - chmod -R a+x scripts
+script:
+  - ./scripts/build.sh
+  - ./scripts/test.sh
+after_success:
+  - ./scripts/docker-push.sh
+notifications:
+  email:
+    on_success: never
+    on_failure: always
