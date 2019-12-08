@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
+using Ocelot.Provider.Consul;
 
 namespace Bijector.API
 {
@@ -16,7 +19,8 @@ namespace Bijector.API
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
-        {
+        {            
+            services.AddOcelot().AddConsul();
             services.AddControllers();
         }
 
@@ -32,6 +36,8 @@ namespace Bijector.API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseOcelot().Wait();
 
             app.UseEndpoints(endpoints =>
             {

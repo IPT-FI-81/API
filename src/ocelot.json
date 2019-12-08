@@ -1,0 +1,32 @@
+{
+    "ReRoutes": [
+        {
+            "DownstreamPathTemplate": "/{everything}",
+            "UpstreamPathTemplate": "/api/{everything}",
+            "DownstreamScheme": "https",
+            "UpstreamHttpMethod": [ "Get", "Put", "Delete", "Patch" ],
+            "UseServiceDiscovery": true,
+            "ServiceName": "Test",
+            "DangerousAcceptAnyServerCertificateValidator": true
+        }
+    ],
+    "Aggregates": [],
+    "GlobalConfiguration": {        
+        "ServiceDiscoveryProvider": {
+            "Host": "localhost",
+            "Port": 8500,
+            "Type": "Consul"         
+        },               
+        "LoadBalancerOptions": {
+            "Type": "LeastConnection",
+            "Key": null,
+            "Expiry": 0
+        },
+        "RequestIdKey": "RequestId",        
+        "HttpHandlerOptions": {
+            "AllowAutoRedirect": false,
+            "UseCookieContainer": false,
+            "UseTracing": false
+        }
+    }
+}
