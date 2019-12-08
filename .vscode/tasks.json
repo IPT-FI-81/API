@@ -13,7 +13,7 @@
                 "build"
             ],
             "dockerBuild": {
-                "tag": "bijectorapi:dev",
+                "tag": "bijector.api:dev",
                 "target": "base",
                 "dockerfile": "${workspaceFolder}/Dockerfile",
                 "context": "${workspaceFolder}"
@@ -29,7 +29,7 @@
                 "build"
             ],
             "dockerBuild": {
-                "tag": "bijectorapi:latest",
+                "tag": "bijector.api:latest",
                 "dockerfile": "${workspaceFolder}/Dockerfile",
                 "context": "${workspaceFolder}"
             },
