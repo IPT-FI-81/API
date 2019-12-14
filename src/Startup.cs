@@ -32,16 +32,18 @@ namespace Bijector.API
             var accountsUrl = discover.ResolveServicePath("Bijector Accounts");
 
             Action<JwtBearerOptions> jwtOptions = o =>
-            {
-                o.Authority = accountsUrl;
-                o.RequireHttpsMetadata = true;
+            {      
+                //o.Authority = accountsUrl;          
+                o.Authority = $"http://{accountsUrl}";
+                o.RequireHttpsMetadata = false;
                 o.Audience = "api.v1";
                 o.BackchannelHttpHandler = new HttpClientHandler{ServerCertificateCustomValidationCallback = (f1, s, t, f2) => true};
             };
 
             Action<OAuth2IntrospectionOptions> oauthOptions = o =>
             {
-                o.Authority = accountsUrl;        
+                //o.Authority = accountsUrl;        
+                o.Authority = $"http://{accountsUrl}";        
             };
             
             services.AddAuthentication().AddIdentityServerAuthentication("Accounts", jwtOptions, oauthOptions);

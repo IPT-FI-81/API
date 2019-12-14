@@ -1,10 +1,19 @@
 {
     "ReRoutes": [
         {
+            "DownstreamPathTemplate": "/accounts/login",            
+            "UpstreamPathTemplate": "/auth/accounts/login",
+            "DownstreamScheme": "https",
+            "UpstreamHttpMethod": [ "Get", "Post"],
+            "UseServiceDiscovery": true,
+            "ServiceName": "Bijector Accounts",
+            "DangerousAcceptAnyServerCertificateValidator": true            
+        },
+        {
             "DownstreamPathTemplate": "/{everything}",            
             "UpstreamPathTemplate": "/api/workflows/{everything}",
             "DownstreamScheme": "https",
-            "UpstreamHttpMethod": [ "Get", "Put", "Delete", "Patch" ],
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Patch" ],
             "UseServiceDiscovery": true,
             "ServiceName": "Bijector Workflows",
             "DangerousAcceptAnyServerCertificateValidator": true,
@@ -17,7 +26,7 @@
             "DownstreamPathTemplate": "/{everything}",
             "UpstreamPathTemplate": "/api/gdrive/{everything}",
             "DownstreamScheme": "https",
-            "UpstreamHttpMethod": [ "Get", "Put", "Delete", "Patch" ],
+            "UpstreamHttpMethod": [ "Get", "Put", "Post", "Delete", "Patch" ],
             "UseServiceDiscovery": true,
             "ServiceName": "Bijector GDrive",
             "DangerousAcceptAnyServerCertificateValidator": true,
@@ -30,7 +39,7 @@
             "DownstreamPathTemplate": "/{everything}",
             "UpstreamPathTemplate": "/api/accounts/{everything}",
             "DownstreamScheme": "https",
-            "UpstreamHttpMethod": [ "Get", "Put", "Delete", "Patch" ],
+            "UpstreamHttpMethod": [ "Get", "Put", "Post", "Delete", "Patch" ],
             "UseServiceDiscovery": true,
             "ServiceName": "Bijector Accounts",
             "DangerousAcceptAnyServerCertificateValidator": true,
