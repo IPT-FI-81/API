@@ -1,3 +1,9 @@
+using System;
+using System.Net.Http;
+using Bijector.Infrastructure.Discovery;
+using IdentityModel.AspNetCore.OAuth2Introspection;
+using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,11 +26,31 @@ namespace Bijector.API
 
         public void ConfigureServices(IServiceCollection services)
         {            
+            services.AddConsul(Configuration);
+            services.AddConsulDiscover();
+            var discover = services.BuildServiceProvider().GetService<IServiceDiscover>();
+            var accountsUrl = discover.ResolveServicePath("Bijector Accounts");
+
+            Action<JwtBearerOptions> jwtOptions = o =>
+            {
+                o.Authority = accountsUrl;
+                o.RequireHttpsMetadata = true;
+                o.Audience = "api.v1";
+                o.BackchannelHttpHandler = new HttpClientHandler{ServerCertificateCustomValidationCallback = (f1, s, t, f2) => true};
+            };
+
+            Action<OAuth2IntrospectionOptions> oauthOptions = o =>
+            {
+                o.Authority = accountsUrl;        
+            };
+            
+            services.AddAuthentication().AddIdentityServerAuthentication("Accounts", jwtOptions, oauthOptions);
+
             services.AddOcelot().AddConsul();
             services.AddControllers();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -32,10 +58,14 @@ namespace Bijector.API
             }            
 
             app.UseHttpsRedirection();
+            
+            app.UseConsul(lifetime);
 
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseAuthentication();          
 
             app.UseOcelot().Wait();
 

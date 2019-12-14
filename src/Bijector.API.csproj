@@ -8,5 +8,21 @@
   <ItemGroup>
     <PackageReference Include="Ocelot" Version="13.8.0" />
     <PackageReference Include="Ocelot.Provider.Consul" Version="13.8.0" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
   </ItemGroup>
+
+  <Choose>
+    <When Condition="$(Configuration)=='Release'">
+      <ItemGroup>
+        <PackageReference Include="Bijector.Infrastructure" Version="[1.0.4-dev,)" />
+        <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <ProjectReference Include="../../Bijector.Infrastructure/src/Bijector.Infrastructure.csproj" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+
 </Project>

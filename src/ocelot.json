@@ -1,13 +1,43 @@
 {
     "ReRoutes": [
         {
-            "DownstreamPathTemplate": "/{everything}",
-            "UpstreamPathTemplate": "/api/{everything}",
+            "DownstreamPathTemplate": "/{everything}",            
+            "UpstreamPathTemplate": "/api/workflows/{everything}",
             "DownstreamScheme": "https",
             "UpstreamHttpMethod": [ "Get", "Put", "Delete", "Patch" ],
             "UseServiceDiscovery": true,
-            "ServiceName": "Test",
-            "DangerousAcceptAnyServerCertificateValidator": true
+            "ServiceName": "Bijector Workflows",
+            "DangerousAcceptAnyServerCertificateValidator": true,
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Accounts",
+                "AllowedScopes": []
+            }
+        },
+        {
+            "DownstreamPathTemplate": "/{everything}",
+            "UpstreamPathTemplate": "/api/gdrive/{everything}",
+            "DownstreamScheme": "https",
+            "UpstreamHttpMethod": [ "Get", "Put", "Delete", "Patch" ],
+            "UseServiceDiscovery": true,
+            "ServiceName": "Bijector GDrive",
+            "DangerousAcceptAnyServerCertificateValidator": true,
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Accounts",
+                "AllowedScopes": []
+            }
+        },
+        {
+            "DownstreamPathTemplate": "/{everything}",
+            "UpstreamPathTemplate": "/api/accounts/{everything}",
+            "DownstreamScheme": "https",
+            "UpstreamHttpMethod": [ "Get", "Put", "Delete", "Patch" ],
+            "UseServiceDiscovery": true,
+            "ServiceName": "Bijector Accounts",
+            "DangerousAcceptAnyServerCertificateValidator": true,
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Accounts",
+                "AllowedScopes": []
+            }
         }
     ],
     "Aggregates": [],
@@ -15,7 +45,7 @@
         "ServiceDiscoveryProvider": {
             "Host": "localhost",
             "Port": 8500,
-            "Type": "Consul"         
+            "Type": "Consul"
         },               
         "LoadBalancerOptions": {
             "Type": "LeastConnection",

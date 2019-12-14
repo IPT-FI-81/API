@@ -7,7 +7,7 @@ namespace Bijector.API
     public class Program
     {
         public static void Main(string[] args)
-        {
+        {            
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -18,7 +18,7 @@ namespace Bijector.API
                     config.AddJsonFile("ocelot.json");
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
-                {                    
+                {                                        
                     webBuilder.UseStartup<Startup>();
                 });
     }
