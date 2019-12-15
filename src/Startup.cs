@@ -2,7 +2,7 @@ using System;
 using System.Net.Http;
 using Bijector.Infrastructure.Discovery;
 using IdentityModel.AspNetCore.OAuth2Introspection;
-using IdentityServer4.AccessTokenValidation;
+using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +12,8 @@ using Microsoft.Extensions.Hosting;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Provider.Consul;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Bijector.API
 {
@@ -34,7 +36,7 @@ namespace Bijector.API
             Action<JwtBearerOptions> jwtOptions = o =>
             {      
                 //o.Authority = accountsUrl;          
-                o.Authority = $"http://{accountsUrl}";
+                o.Authority = $"https://{accountsUrl}";
                 o.RequireHttpsMetadata = false;
                 o.Audience = "api.v1";
                 o.BackchannelHttpHandler = new HttpClientHandler{ServerCertificateCustomValidationCallback = (f1, s, t, f2) => true};
@@ -43,13 +45,13 @@ namespace Bijector.API
             Action<OAuth2IntrospectionOptions> oauthOptions = o =>
             {
                 //o.Authority = accountsUrl;        
-                o.Authority = $"http://{accountsUrl}";        
+                o.Authority = $"https://{accountsUrl}";        
             };
             
-            services.AddAuthentication().AddIdentityServerAuthentication("Accounts", jwtOptions, oauthOptions);
+            services.AddAuthentication().AddIdentityServerAuthentication("Accounts", jwtOptions, oauthOptions);            
 
             services.AddOcelot().AddConsul();
-            services.AddControllers();
+            services.AddControllers();            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
@@ -67,7 +69,7 @@ namespace Bijector.API
 
             app.UseAuthorization();
 
-            app.UseAuthentication();          
+            app.UseAuthentication();            
 
             app.UseOcelot().Wait();
 

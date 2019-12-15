@@ -7,14 +7,14 @@
   
   <ItemGroup>
     <PackageReference Include="Ocelot" Version="13.8.0" />
-    <PackageReference Include="Ocelot.Provider.Consul" Version="13.8.0" />
+    <PackageReference Include="Ocelot.Provider.Consul" Version="13.8.0" />    
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
   </ItemGroup>
 
   <Choose>
     <When Condition="$(Configuration)=='Release'">
       <ItemGroup>
-        <PackageReference Include="Bijector.Infrastructure" Version="[1.0.7-dev,)" />        
+        <PackageReference Include="Bijector.Infrastructure" Version="[1.0.10-dev,)" />         
       </ItemGroup>
     </When>
     <Otherwise>
