@@ -2,7 +2,6 @@ using System;
 using System.Net.Http;
 using Bijector.Infrastructure.Discovery;
 using IdentityModel.AspNetCore.OAuth2Introspection;
-using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,8 +11,6 @@ using Microsoft.Extensions.Hosting;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Provider.Consul;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Bijector.API
 {

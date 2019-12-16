@@ -2,7 +2,7 @@
     "ReRoutes": [
         {
             "DownstreamPathTemplate": "/accounts/login",            
-            "UpstreamPathTemplate": "/auth/accounts/login",
+            "UpstreamPathTemplate": "/auth/login",
             "DownstreamScheme": "https",
             "UpstreamHttpMethod": [ "Get", "Post"],
             "UseServiceDiscovery": true,
@@ -50,9 +50,10 @@
         }
     ],
     "Aggregates": [],
-    "GlobalConfiguration": {        
+    "GlobalConfiguration": {  
+        "BaseUrl":"https://api:5002",
         "ServiceDiscoveryProvider": {
-            "Host": "localhost",
+            "Host": "consul",
             "Port": 8500,
             "Type": "Consul"
         },               
@@ -63,8 +64,8 @@
         },
         "RequestIdKey": "RequestId",        
         "HttpHandlerOptions": {
-            "AllowAutoRedirect": false,
-            "UseCookieContainer": false,
+            "AllowAutoRedirect": true,
+            "UseCookieContainer": true,
             "UseTracing": false
         }
     }
